@@ -7,6 +7,7 @@ import Header from "../Components/Header";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import LoginComponent from "../Components/Forms/LoginComponent";
 
 const themeLight = createMuiTheme({
   palette: {},
@@ -53,7 +54,7 @@ const sections = [
   { title: "Appointment", url: "/appointment" },
 ];
 
-export default function AboutUs() {
+export default function Login() {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -61,15 +62,8 @@ export default function AboutUs() {
         <MuiThemeProvider theme={themeLight}>
           <Header title="Log In" sections={sections} />
           <CssBaseline />
-          <div className={classes.paper}>
-            <Typography
-              variant="body1"
-              paragraph={true}
-              className={classes.body}
-            >
-              caca
-            </Typography>
-
+          <div>
+            <LoginComponent/>
           </div>
         </MuiThemeProvider>
       </Container>

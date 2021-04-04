@@ -53,7 +53,7 @@ const sections = [
   { title: "Appointment", url: "/appointment" },
 ];
 
-export default function AboutUs() {
+export default function SignUp() {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -67,7 +67,7 @@ export default function AboutUs() {
               paragraph={true}
               className={classes.body}
             >
-              poop
+              placeholder
             </Typography>
 
           </div>
