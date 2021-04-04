@@ -55,14 +55,8 @@ const loadSections = () => {
             <Button href="/signup" variant="outlined" size="small">
               Sign Up
             </Button>
-            <Button
-              onClick={() => {
-                
-              }}
-              variant="outlined"
-              size="small"
-            >
-              Sign In
+            <Button href="/loign" variant="outlined" size="small">
+              Log In
             </Button>
           </div>
       </Toolbar>

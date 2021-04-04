@@ -9,6 +9,7 @@ import Login from "./Screens/Login";
 import ProfileUser from "./Screens/ProfileUser";
 import SignUp from "./Screens/SignUp";
 import logo from './logo.svg';
+import Routes from "./Screens/Routes.js"
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
           Learn React
         </a>
       </header> */}
-      <HomePage />
+      <Routes />
     </div> 
 
   );

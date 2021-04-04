@@ -1,12 +1,12 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import AboutUs from './Screens/AboutUs';
-import Appointment from './Screens/Appointment';
-import HomePage from './Screens/HomePage';
-import Login from './Screens/Login';
-import ProfileUser from './Screens/ProfileUser';
+import AboutUs from './AboutUs';
+import Appointment from './Appointment';
+import HomePage from './HomePage';
+import Login from './Login';
+import ProfileUser from './ProfileUser';
 import React from 'react';
-import SignUp from './Screens/SignUp';
+import SignUp from './SignUp';
 
 function Routes() {
     return (
