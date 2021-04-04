@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import LoginForm from "./LoginForm";
+// import axios from "axios";
+// import jwt_decode from "jwt-decode";
 
 export class LoginComponent extends Component {
     state = {
@@ -105,8 +107,9 @@ export class LoginComponent extends Component {
         return (
             <div>
                 <LoginForm handleChange={this.handleChange} values={values} />
-                <button className="submit-button" onClick={this.handleSubmit}>
-                    Submit
+                <label> { this.state.errorMessage } </label> <br/>
+                <button className="form-button" onClick={this.validateFields}>
+                    Log In
                 </button>
             </div>
         )

@@ -5,6 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import React from "react";
+import SignUpComponent from "../Components/Forms/SignUpComponent";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -61,15 +62,8 @@ export default function SignUp() {
         <MuiThemeProvider theme={themeLight}>
           <Header title="Sign Up" sections={sections} />
           <CssBaseline />
-          <div className={classes.paper}>
-            <Typography
-              variant="body1"
-              paragraph={true}
-              className={classes.body}
-            >
-              placeholder
-            </Typography>
-
+          <div>
+            <SignUpComponent/>
           </div>
         </MuiThemeProvider>
       </Container>
