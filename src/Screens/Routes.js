@@ -1,5 +1,6 @@
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
 
+import history from "./History"
 import AboutUs from './AboutUs';
 import Appointment from './Appointment';
 import HomePage from './HomePage';
@@ -11,17 +12,17 @@ import SignUp from './SignUp';
 function Routes() {
     return (
         <div className="Routes">
-        <BrowserRouter>
+        <Router history={history}>
             <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-            <Route path="/aboutus" component={AboutUs} />
-            <Route path="/appointment" component={Appointment} />
-            <Route path="/profileuser" component={ProfileUser} />
-            <Route component={Error} />
+                <Route exact path="/" component={HomePage} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/login" component={Login} />
+                <Route path="/aboutus" component={AboutUs} />
+                <Route path="/appointment" component={Appointment} />
+                <Route path="/profileuser" component={ProfileUser} />
+                <Route component={Error} />
             </Switch>
-        </BrowserRouter>
+        </Router>
         </div>
     );
 }

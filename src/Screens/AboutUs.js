@@ -46,7 +46,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const sections = [];
+const sections = [
+  { title: "Home", url: "/" },
+  { title: "About Us", url: "/aboutus" },
+  { title: "ProfileUser", url: "/profileuser" },
+  { title: "Appointment", url: "/appointment" },
+];
+
 export default function AboutUs() {
   const classes = useStyles();
   return (

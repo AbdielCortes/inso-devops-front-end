@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import history from "../Screens/History"
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -52,10 +53,10 @@ const loadSections = () => {
           {title}
         </Typography>
         <div>
-            <Button href="/signup" variant="outlined" size="small">
+            <Button onClick={() => history.push("/signup")} variant="outlined" size="small">
               Sign Up
             </Button>
-            <Button href="/loign" variant="outlined" size="small">
+            <Button onClick={() => history.push("/login")} variant="outlined" size="small">
               Log In
             </Button>
           </div>
