@@ -43,6 +43,7 @@ const sections = [
   { title: "About Us", url: "/aboutus" },
   { title: "ProfileUser", url: "/profileuser" },
   { title: "Appointment", url: "/appointment" },
+  {title:   "PatientP",   url: "/patientp"},
 ];
 
 const photo = {
