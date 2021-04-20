@@ -64,6 +64,7 @@ export default function HomePage() {
   const [doctorNames, setDoctorNames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredName, setFilteredName] = useState("");
+  const [isDoctor, setIsDoctor] = useState(false);
 
   // const getDoc = useCallback(() => {
   //   console.log("getDoc const testing: " + doctorData.map(item => {
@@ -72,7 +73,7 @@ export default function HomePage() {
   //       setDoctorNames(item)
   //     }
   //   }));
-  //   setDoctors(doctorData);
+  //   setDoctor(doctorData);
   // }, []);
 
   // useEffect(() => {
@@ -126,25 +127,19 @@ export default function HomePage() {
     doctorHandleOptions();
     setDoctorNames(doctorsOptions);
     console.log(doctorsOptions);
-    console.log("doctor selected: " + filter);
-  },[doctor, doctorHandleOptions, doctorsOptions, filter]);
+    console.log("doctor selected: " + doctor);
+  },[doctor]);
 
-  // useEffect(() => {
-  //   console.log("typing... " + q)
-  // },[q]);
-
-  // useEffect(() => {
-  //   console.log("SetFilter var: " + filter)
-  // },[filter]);
 
   useEffect(() => {
-    console.log("doctor selected was: " + doctor);
-  }, [doctor]);
-
-  // useEffect(() => {
-  //   console.log("initialization doctors");
-  //   getDoctorFromAPI();
-  // },[getDoctorFromAPI]);
+    if (isDoctor) {
+      console.log("Ready to go to Doctor "+ doctor + " page. The isDoctor variable is: "  + isDoctor);
+      setIsDoctor(false);
+    }
+    else {
+      console.log("no doctor to navegate for now...");
+    }
+  }, [isDoctor]);
 
   
 
@@ -165,30 +160,8 @@ export default function HomePage() {
           />
           <Grid item xs={6} sm={6}>
             <Grid item xs={12} sm={6} className={classes.submit}>
-              {/* <Autocomplete 
-              options={doctorNames}
-              getOptionLabel={(option) => option}
-              style={{width: 300}}
-              onChange={(e, v) => {
-                (v === null) ?
-                (setFilter("")) :
-                (setFilter(v))
-              }}
-              renderInput={(params) => (
-                <TextField 
-                {...params}
-                label="Search Doctor..."
-                variant="outlined"
-                fullWidth
-                onChange={(e) => {
-                  (setFilter(e.target.value))
-                }}
-                />
-              )}
-              /> */}
               <Autocomplete 
               options={doctorNames}
-              freeSolo
               autoComplete
               autoHighlight
               getOptionLabel={(option) => option}
@@ -204,31 +177,33 @@ export default function HomePage() {
                 label="Search Doctor..."
                 variant="outlined"
                 fullWidth
-                // onChange={(e) => {setQ(e.target.value)}}
                 onChange={(e) => {
                   setDoctor(e.target.value.toLowerCase());
                 }}
-                //value={setDoctor}
+                onKeyDown={e => {
+                  if (e.keyCode === 13 && e.target.value) {
+                    setDoctor(e.target.value);
+                    setIsDoctor(true);
+                  }
+                }}
                 />
               )}
               onChange={() => {
                 doctorData.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(doctor) > -1 )).map((item) => {
                   setDoctor(item.doctor_firstname);
-                  //console.log("you have entered to " + item.doctor_firstname + " page!")
                 })
               }}
-              //onClick={() => {console.log("you have entered to " + doctor + " page!")}}
               />
             </Grid>
             <Grid>
               <Grid item xs={12} sm={9}>
-                <List>
-                  {doctorData.filter(doc => (doc.doctor_firstname === filter)).map((item) => (
+                {/* <List>
+                  {doctorData.filter(doc => (doc.doctor_firstname === doctor)).map((item) => (
                     <ListItem
                       key={`${item.doctor_id}`}
                       button
                       component="a"
-                      onClick={() => {}}
+                      onClick={() => {console.log("just have clicked the list item: " + doctor)}}
                     >
                       <ListItemIcon>
                         <Avatar alt="DocIcon"/>
@@ -236,7 +211,7 @@ export default function HomePage() {
                       <ListItemText primary={`${item.name}`}/>
                     </ListItem>
                   ))}
-                </List>
+                </List> */}
                 {/* <List>
                   {doctorData.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(q) > -1 )).map((item) => (
                     <ListItem
