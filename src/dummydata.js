@@ -11,7 +11,7 @@ export const doctorData = [
         doctor_id: 2,
         doctor_firstname: "Amy",
         doctor_lastname: "Lopez",
-        doctor_specialization: "Neurology",
+        doctor_specialization: "Neurologist",
         doctor_location: "San Juan",
         doctor_licence: 78
     },
@@ -19,7 +19,7 @@ export const doctorData = [
         doctor_id: 3,
         doctor_firstname: "Mario",
         doctor_lastname: "Perez",
-        doctor_specialization: "Dermatology",
+        doctor_specialization: "Dermatologist",
         doctor_location: "Ponce",
         doctor_licence: 14
     },

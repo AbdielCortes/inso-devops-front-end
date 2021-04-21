@@ -13,14 +13,16 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Photo from "../Components/Photo";
+import Select from "react-select";
 import Sidebar from "../Components/Sidebar";
 import TextField from "@material-ui/core/TextField";
+import axios from "axios";
 import {doctorData} from '../dummydata';
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   margin: {
     marginLeft: theme.spacing(10),
@@ -36,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginRight: theme.spacing(5),
   },
+  select: {
+    width: "11%",
+    marginRight: 70,
+    marginTop: 30,
+    zIndex: 9999
+  }
 }));
 
 const sections = [
@@ -59,12 +67,23 @@ const sidebar = {
 export default function HomePage() {
 
   const [doctor, setDoctor] = useState('');
-  const [filter, setFilter] = useState("");
+  const [docs, setDocs] = useState([]);
+  //const [filter, setFilter] = useState("");
   const [q, setQ] = useState("");
   const [doctorNames, setDoctorNames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredName, setFilteredName] = useState("");
   const [isDoctor, setIsDoctor] = useState(false);
+  const [filter, setFilter] = useState(null);
+
+  // const getDoctors = async () => {
+  //   const result = await axios("http://localhost:8080/api/comps");
+  //   setDocs(result.data);
+  // };
+
+  // useEffect(() => {
+  //   console.log("fetch from the db: " + docs);
+  // });
 
   // const getDoc = useCallback(() => {
   //   console.log("getDoc const testing: " + doctorData.map(item => {
@@ -105,6 +124,18 @@ export default function HomePage() {
 
   const doctorsOptions = [];
 
+  const filterOptions = [
+    {value: "cardiologist", label: "Cardiologist"},
+    {value: "pediatrician", label: "Pediatrician"},
+    {value: "family physician", label: "Family Physician"},
+    {value: "neurologist", label: "Neurologist"},
+    {value: "dermatologist", label: "Dermatologist"},
+    {value: "radiologist", label: "Radiologist"},
+    {value: "dentist", label: "Dentist"},
+    //{value: "all", label: "All"},
+    {value: "others", label: "Others"},
+  ];
+
   const doctorHandleOptions = useCallback(() => {
     doctorData.map((item) => 
     console.log(
@@ -140,6 +171,10 @@ export default function HomePage() {
       console.log("no doctor to navegate for now...");
     }
   }, [isDoctor]);
+
+  useEffect(() => {
+    console.log("filter selected: " + filter);
+  },[filter]);
 
   
 
@@ -197,21 +232,21 @@ export default function HomePage() {
             </Grid>
             <Grid>
               <Grid item xs={12} sm={9}>
-                {/* <List>
-                  {doctorData.filter(doc => (doc.doctor_firstname === doctor)).map((item) => (
+                <List>
+                  {doctorData.filter(doc => (doc.doctor_specialization === filter)).map((item) => (
                     <ListItem
-                      key={`${item.doctor_id}`}
+                      key={`${item.doctor_firstname}`}
                       button
                       component="a"
-                      onClick={() => {console.log("just have clicked the list item: " + doctor)}}
+                      onClick={() => {console.log("just have clicked the list item: " + item.doctor_firstname)}}
                     >
                       <ListItemIcon>
-                        <Avatar alt="DocIcon"/>
+                        <Avatar alt="DocIcon" />
                       </ListItemIcon>
-                      <ListItemText primary={`${item.name}`}/>
+                      <ListItemText primary={`${item.doctor_firstname}`}/>
                     </ListItem>
                   ))}
-                </List> */}
+                </List>
                 {/* <List>
                   {doctorData.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(q) > -1 )).map((item) => (
                     <ListItem
@@ -230,6 +265,40 @@ export default function HomePage() {
               </Grid>
             </Grid>
           </Grid>
+          <Select
+            onChange={(e) => {
+              if(e.value === "dentist"){
+                setFilter("Dentist");
+              }
+              else if(e.value === "dermatologist"){
+                setFilter("Dermatologist");
+              }
+              else if(e.value === "cardiologist"){
+                setFilter("Cardiologist");
+              }
+              else if(e.value === "pediatrician"){
+                setFilter("Pediatrician");
+              }
+              else if(e.value === "family physician"){
+                setFilter("Family Physician");
+              }
+              else if(e.value === "radiologist"){
+                setFilter("Radiologist");
+              }
+              else if(e.value === "neurologist"){
+                setFilter("Neurologist");
+              }
+              else if(e.value === "others"){
+                setFilter("Others");
+              }
+              else {
+                setFilter(null);
+              }
+            }}
+            className={classes.select}
+            options={filterOptions}
+            //isClearable={true}
+          />
         </Grid>
       </Container>
       <Footer />
