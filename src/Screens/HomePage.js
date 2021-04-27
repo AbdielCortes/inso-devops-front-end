@@ -51,6 +51,7 @@ const sections = [
   { title: "About Us", url: "/aboutus" },
   { title: "ProfileUser", url: "/profileuser" },
   { title: "Appointment", url: "/appointment" },
+  { title: "Appointment Doc", url: "/appointmentDoc" },
   {title:   "PatientP",   url: "/patientp"},
 ];
 
