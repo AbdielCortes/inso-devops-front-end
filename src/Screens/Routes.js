@@ -10,6 +10,7 @@ import ProfileUser from './ProfileUser';
 import React from 'react';
 import SignUp from './SignUp';
 import history from "./History"
+import DoctorInfo from "./DoctorInfo";
 
 function Routes() {
     return (
@@ -24,6 +25,7 @@ function Routes() {
                 <Route path="/appointmentDoc" component={AppointmentDoc} />
                 <Route path="/profileuser" component={ProfileUser} />
                 <Route path="/patientp" component={ProfileP} />
+                <Route path="/doctorinfo" component={DoctorInfo} />
                 <Route component={Error} />
             </Switch>
         </Router>

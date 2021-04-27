@@ -12,13 +12,12 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebarSection: {
     marginTop: theme.spacing(3),
-
   },
 }));
 
 export default function Sidebar(props) {
   const classes = useStyles();
-  const { description, title } = props;
+  const { description, title, name, specialty, location } = props;
 
   return (
     <Grid item xs={12} md={4}>
@@ -26,6 +25,9 @@ export default function Sidebar(props) {
         <Typography variant="h6" gutterBottom>
           {title}
         </Typography>
+        <Typography variant="h4" gutterBottom> {name} </Typography>
+        <Typography>{specialty}</Typography>
+        <Typography>{location}</Typography>
         <Typography>{description}</Typography>
       </Paper>
     </Grid>
