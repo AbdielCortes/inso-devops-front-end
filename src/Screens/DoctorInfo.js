@@ -1,16 +1,18 @@
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import React, {useEffect, useState} from "react";
 
+import Alert from 'react-popup-alert';
+import Button from '@material-ui/core/Button';
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import DateTimePicker from 'react-datetime-picker';
 import Footer from "../Components/Footer";
+import Grid from "@material-ui/core/Grid";
 import Header from "../Components/Header";
-import React from "react";
-import Typography from "@material-ui/core/Typography";
 import ProfilePhoto from "../Components/ProfilePhoto";
 import Sidebar from "../Components/Sidebar";
-
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 
 const themeLight = createMuiTheme({
     palette: {},
@@ -72,7 +74,26 @@ const sidebar = {
 
 export default function DoctorInfo() {
 
+    const [date, setDate] = useState(new Date());
+    const [isShow, setIsShow] = useState(false);
+    //const [alertType, setAlertType] = useState('');
+    const [alertText, setAlertText] = useState('successful appointment');
     const classes = useStyles();
+
+    const handleChange = (newdata) => {
+        setDate(newdata);
+    };
+
+    const handleCloseAlert = () => {
+        setIsShow(false);
+        setAlertText('');
+    };
+
+    const handleShowAlert = () => {
+        setIsShow(true);
+        setAlertText('Successful appointment!')
+    };
+
     return (
         <React.Fragment>
             <Container maxWidth="lg">
@@ -87,6 +108,22 @@ export default function DoctorInfo() {
                         name={sidebar.name}
                         specialty={sidebar.specialty}
                         location={sidebar.location}
+                    />
+                    <DateTimePicker
+                    value={date}
+                    onChange={handleChange}
+                    />
+                    <Button variant="contained" color="secondary" size='small' onClick={handleShowAlert}>
+                        Make Appointment
+                    </Button>
+                    <Alert 
+                    header={'Successful appointment!'}
+                    btnText={'Close'}
+                    text={'Appointment will be on: ' + date}
+                    show={isShow}
+                    onClosePress={handleCloseAlert}
+                    pressCloseOnOutsideClick={true}
+                    showBorderBottom={true}
                     />
                 </Grid>
                 <Sidebar description={sidebar.description}/>
