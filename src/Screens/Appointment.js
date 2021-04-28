@@ -9,6 +9,7 @@ import Header from "../Components/Header";
 import Table from "../Components/Table";
 import Typography from "@material-ui/core/Typography";
 import {appointData} from '../appointmentsData'
+import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 
 const themeLight = createMuiTheme({
@@ -60,9 +61,46 @@ export default function Appointment() {
 
     const [data, setData] = useState([]);
     const [active, setActive] = useState(true);
+    const [apt, setApt] = useState([]);
+    const [docs, setDocs] = useState([]);
+    const [pat, setPat] = useState([]); 
 
     const classes = useStyles();
 
+    // where the db is
+    const url = 'https://devops-app-deploy.herokuapp.com/';
+
+    //get appointment table from db
+    const getAppointments = () => {
+      axios.get(`${url}appointment`)
+      .then((response) => {
+        const result = response.data.Users;
+        setApt(result);
+      })
+      .catch(error => console.log(`Error: ${error}`));
+    }
+
+    // get patients table from db
+    const getPatients = () => {
+      axios.get(`${url}patients`)
+      .then((response) => {
+        const result = response.data.Users;
+        setPat(result);
+      })
+      .catch(error => console.log(`Error: ${error}`));
+    }
+
+    // get doctors table from db
+    const getDoctors = () => {
+      axios.get(`${url}doctors`)
+      .then((response) => {
+        const result = response.data.Users;
+        setDocs(result);
+      })
+      .catch(error => console.log(`Error: ${error}`));
+    }
+
+    // columns for the table of appointments
     const columns = useMemo(
         () => [
             {
@@ -71,44 +109,62 @@ export default function Appointment() {
                 //first group columns
                 columns: [
                     {
-                        Header: "Doctor's",
+                      Header: "Appointment ID",
+                      accessor: "appointment_id"
+                    },
+                    {
+                      Header: "Doctor's ID",
+                      accessor: "doctor_id"
+                    },
+                    {
+                        Header: "Doctor Name",
                         accessor: "doctor_firstname"
                     },
                     {
-                        Header: "Date",
-                        accessor: "appointment_date",
-                        // Cell: ({ cell: { value } }) => {
-                        //     const hour = Math.floor(value / 60);
-                        //     const min = Math.floor(value % 60);
-                        //     return (
-                        //         <>
-                        //         {/* {hour > 0 ? `${hour} hr${hour > 1 ? "s" : ""} ` : ""}
-                        //         {min > 0 ? `${min} min${min > 1 ? "s" : ""} ` : ""} */}
-                        //         {hour + " : " + min}
-                        //         </>
-                        //     );
-                        // }
+                      Header: "Doctor LastName",
+                      accessor: "doctor_lastname"
+                    },
+                    {
+                      Header: "Date",
+                      accessor: "appointment_date",
                     }
                 ]
             }
         ],[]);
 
+        // array to push all data
         const appointmentsOptions = [];
 
-        const appointmentHandleOptions = useCallback(() => {
-            appointData.map((item) => 
-            console.log(
-              "appointment: " + item.appointment_id + " is pushed to an array " + appointmentsOptions.push(item)
-            )
-            );
-          },[appointmentsOptions]);
+        // function to push into the appointmentsOptions array
+        const AllDataHandleOptions = useCallback(() => {
+          apt.map((item) => 
+          console.log(
+            "appointment: " + item.appointment_id + " is pushed to an array " + appointmentsOptions.push(item)
+          )
+          );
+          docs.map((item) => 
+          console.log(
+            "docs: " + item.doctor_id + " is pushed to an array " + appointmentsOptions.push(item)
+          )
+          );
+          pat.map((item) => 
+          console.log(
+            "patients: " + item.patient_id + " is pushed to an array " + appointmentsOptions.push(item)
+          )
+          );
+        },[appointmentsOptions]);
 
+
+          // initialization of table
           useEffect(() => {
-            appointmentHandleOptions();
+            getAppointments();
+            getDoctors();
+            getPatients();
+            AllDataHandleOptions();
             setData(appointmentsOptions);
             console.log("result from the data: " + appointmentsOptions);
             setActive(false);
-            //console.log("doctor selected: " + data);
+            console.log("active is set to false " + active);
           },[active]);
 
     return (

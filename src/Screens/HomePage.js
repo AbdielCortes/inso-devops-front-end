@@ -20,6 +20,7 @@ import axios from "axios";
 import {doctorData} from '../dummydata';
 import { makeStyles } from "@material-ui/core/styles";
 
+// creating styles for the components
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3)
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// creating sections in tab navigator
 const sections = [
   { title: "Home", url: "/" },
   { title: "About Us", url: "/aboutus" },
@@ -55,10 +57,12 @@ const sections = [
   {title:   "PatientP",   url: "/patientp"},
 ];
 
+// photo backgrond
 const photo = {
   image: "https://www.diabetes.co.uk/wp-content/uploads/2019/01/iStock-10131071761-1.jpg",
 };
 
+// creates a mini about paragraph
 const sidebar = {
   title: "About",
   description:
@@ -67,9 +71,9 @@ const sidebar = {
 
 export default function HomePage() {
 
+  // hoocks to save information or booleans
   const [doctor, setDoctor] = useState('');
   const [docs, setDocs] = useState([]);
-  //const [filter, setFilter] = useState("");
   const [q, setQ] = useState("");
   const [doctorNames, setDoctorNames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -77,54 +81,31 @@ export default function HomePage() {
   const [isDoctor, setIsDoctor] = useState(false);
   const [filter, setFilter] = useState(null);
 
-  // const getDoctors = async () => {
-  //   const result = await axios("http://localhost:8080/api/comps");
-  //   setDocs(result.data);
-  // };
+  // where the db is
+  const url = 'https://devops-app-deploy.herokuapp.com/';
 
-  // useEffect(() => {
-  //   console.log("fetch from the db: " + docs);
-  // });
+  //get doctors from db
+  const getDoctors = () => {
+    axios.get(`${url}doctors`)
+    .then((response) => {
+      const result = response.data.Users;
+      setDocs(result);
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
 
-  // const getDoc = useCallback(() => {
-  //   console.log("getDoc const testing: " + doctorData.map(item => {
-  //     for (var i = 0; i < doctorData.length; i++) {
-  //       console.log("doctor name pushed: " + item);
-  //       setDoctorNames(item)
-  //     }
-  //   }));
-  //   setDoctor(doctorData);
-  // }, []);
+  //inizialized doctors from db
+  useEffect(() => {
+    getDoctors();
+  },[])
 
-  // useEffect(() => {
-  //   getDoc();
-  //   console.log("fetching dummy data:" + doctorData);
-  // },[getDoc]);
-
-  // useEffect(() => {
-  //   console.log("fetching dummy data:" + doctors);
-  // }, [doctors]);
-
-  // useEffect(() => {
-  //   console.log("doctorsData dummy names:" + doctorData.map((data, key) => {
-  //     return (
-  //       <div key={key}>
-  //         {data.doctor_id +
-  //         ", " +
-  //         data.doctor_firstname +
-  //         ", " + 
-  //         data.doctor_lastname +
-  //         ", " +
-  //         data.doctor_specialization}
-  //       </div>
-  //     );
-  //   },[]));
-  // });
-
+  // style variable
   const classes = useStyles();
 
+  //array to save doctors options
   const doctorsOptions = [];
 
+  // array to save filters doctors
   const filterOptions = [
     {value: "cardiologist", label: "Cardiologist"},
     {value: "pediatrician", label: "Pediatrician"},
@@ -133,36 +114,28 @@ export default function HomePage() {
     {value: "dermatologist", label: "Dermatologist"},
     {value: "radiologist", label: "Radiologist"},
     {value: "dentist", label: "Dentist"},
-    //{value: "all", label: "All"},
     {value: "others", label: "Others"},
   ];
 
+  // function to push doctors to doctorsOptions
   const doctorHandleOptions = useCallback(() => {
-    doctorData.map((item) => 
+    docs.map((item) => 
     console.log(
       "Doctor: " + item.doctor_firstname + " is pushed to an array " + doctorsOptions.push(item.doctor_firstname)
     )
     );
   },[doctorsOptions]);
 
-  // const getDoctorFromAPI = () => {
-  //   console.log("Doctors fetched from API")
-
-  //   for (var i = 0; i < doctorData.length; i++) {
-  //     console.log("doctor name pushed: " + doctorData[i].doctor_firstname);
-  //     doctorsOptions.push(doctorData[i].doctor_firstname)
-  //   }
-  //   setDoctorNames(doctorsOptions)
-  // }
-
+  //When doctors are fetched, this will run to setup the home page
   useEffect(() => {
+    //console.log("Entering to see the first doctor: " + docs);
     doctorHandleOptions();
     setDoctorNames(doctorsOptions);
     console.log(doctorsOptions);
     console.log("doctor selected: " + doctor);
-  },[doctor]);
+  },[docs]);
 
-
+  //When find an doctor this function is prompt
   useEffect(() => {
     if (isDoctor) {
       console.log("Ready to go to Doctor "+ doctor + " page. The isDoctor variable is: "  + isDoctor);
@@ -173,6 +146,7 @@ export default function HomePage() {
     }
   }, [isDoctor]);
 
+  //debug for filter selected
   useEffect(() => {
     console.log("filter selected: " + filter);
   },[filter]);
@@ -202,11 +176,6 @@ export default function HomePage() {
               autoHighlight
               getOptionLabel={(option) => option}
               style={{width: 300}}
-              // onChange={(e, v) => {
-              //   (v === null) ?
-              //   (setFilter("")) :
-              //   (setFilter(v))
-              // }}
               renderInput={(params) => (
                 <TextField 
                 {...params}
@@ -225,7 +194,7 @@ export default function HomePage() {
                 />
               )}
               onChange={() => {
-                doctorData.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(doctor) > -1 )).map((item) => {
+                docs.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(doctor) > -1 )).map((item) => {
                   setDoctor(item.doctor_firstname);
                 })
               }}
@@ -234,7 +203,7 @@ export default function HomePage() {
             <Grid>
               <Grid item xs={12} sm={9}>
                 <List>
-                  {doctorData.filter(doc => (doc.doctor_specialization === filter)).map((item) => (
+                  {docs.filter(doc => (doc.doctor_specialization === filter)).map((item) => (
                     <ListItem
                       key={`${item.doctor_firstname}`}
                       button
@@ -248,21 +217,6 @@ export default function HomePage() {
                     </ListItem>
                   ))}
                 </List>
-                {/* <List>
-                  {doctorData.filter(doc => (doc.doctor_firstname.toLowerCase().indexOf(q) > -1 )).map((item) => (
-                    <ListItem
-                      key={`${item.doctor_id}`}
-                      button
-                      component="a"
-                      onClick={() => {}}
-                    >
-                      <ListItemIcon>
-                        <Avatar alt="DocIcon"/>
-                      </ListItemIcon>
-                      <ListItemText primary={`${item.doctor_firstname}`}/>
-                    </ListItem>
-                  ))}
-                </List> */}
               </Grid>
             </Grid>
           </Grid>
@@ -298,7 +252,6 @@ export default function HomePage() {
             }}
             className={classes.select}
             options={filterOptions}
-            //isClearable={true}
           />
         </Grid>
       </Container>
