@@ -124,7 +124,7 @@ export default function HomePage() {
   const doctorHandleOptions = useCallback(() => {
     docs.map((item) => 
     console.log(
-      "Doctor: " + item.doctor_firstname + " is pushed to an array " + doctorsOptions.push(item.doctor_firstname)
+      "Doctor: " + item.doctor_firstname + item.doctor_lastname + " is pushed to an array " + doctorsOptions.push(item.doctor_firstname)
     )
     );
   },[doctorsOptions]);

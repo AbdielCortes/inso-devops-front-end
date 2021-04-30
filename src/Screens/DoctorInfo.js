@@ -64,9 +64,9 @@ const profilePhoto = {
 };
 
 const sidebar = {
-    name: "Ashton S. Verano",
-    specialty: "Ortodoncista",
-    location: "Mayagüez, Puerto Rico",
+    name: "Bryan Yéssica Joyce",
+    specialty: "Family Physician",
+    location: "Isabela, Puerto Rico",
     description:
         "15 años de experiencia. Más de 5 certificados. " +
         "Top 3 en los mejores dentistas a nivel de Puerto Rico.",
@@ -86,12 +86,11 @@ export default function DoctorInfo() {
 
     const handleCloseAlert = () => {
         setIsShow(false);
-        setAlertText('');
     };
 
     const handleShowAlert = () => {
         setIsShow(true);
-        setAlertText('Successful appointment!')
+        
     };
 
     return (
@@ -117,9 +116,9 @@ export default function DoctorInfo() {
                         Make Appointment
                     </Button>
                     <Alert 
-                    header={'Successful appointment!'}
+                    header={(date != null) ? 'Successful Alert ' : 'Failure Alert '}
                     btnText={'Close'}
-                    text={'Appointment will be on: ' + date}
+                    text={(date != null) ? 'Successful appointment: ' + date : 'Failure appointment!'}
                     show={isShow}
                     onClosePress={handleCloseAlert}
                     pressCloseOnOutsideClick={true}
