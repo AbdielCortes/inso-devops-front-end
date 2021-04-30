@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Avatar from "@material-ui/core/Avatar";
+import Button from '@material-ui/core/Button';
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Footer from "../Components/Footer";
@@ -39,12 +40,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginRight: theme.spacing(5),
   },
-  select: {
-    width: "11%",
-    marginRight: 70,
-    marginTop: 30,
-    zIndex: 9999
-  }
+  // select: {
+  //   width: "11%",
+  //   marginRight: 70,
+  //   marginTop: 30,
+  //   zIndex: 9999
+  // }
 }));
 
 // creating sections in tab navigator
@@ -80,6 +81,8 @@ export default function HomePage() {
   const [filteredName, setFilteredName] = useState("");
   const [isDoctor, setIsDoctor] = useState(false);
   const [filter, setFilter] = useState(null);
+  const [filterBox, setFilterBox] = useState(null);
+
 
   // where the db is
   const url = 'https://devops-app-deploy.herokuapp.com/';
@@ -151,6 +154,11 @@ export default function HomePage() {
     console.log("filter selected: " + filter);
   },[filter]);
 
+  const clearFilterHandle = () => {
+    setFilter(null);
+    setFilterBox(null);
+  }
+
   
 
   return (
@@ -201,7 +209,7 @@ export default function HomePage() {
               />
             </Grid>
             <Grid>
-              <Grid item xs={12} sm={9}>
+              <Grid item xs={12} sm={6}>
                 <List>
                   {docs.filter(doc => (doc.doctor_specialization === filter)).map((item) => (
                     <ListItem
@@ -220,39 +228,44 @@ export default function HomePage() {
               </Grid>
             </Grid>
           </Grid>
-          <Select
-            onChange={(e) => {
-              if(e.value === "dentist"){
-                setFilter("Dentist");
-              }
-              else if(e.value === "dermatologist"){
-                setFilter("Dermatologist");
-              }
-              else if(e.value === "cardiologist"){
-                setFilter("Cardiologist");
-              }
-              else if(e.value === "pediatrician"){
-                setFilter("Pediatrician");
-              }
-              else if(e.value === "family physician"){
-                setFilter("Family Physician");
-              }
-              else if(e.value === "radiologist"){
-                setFilter("Radiologist");
-              }
-              else if(e.value === "neurologist"){
-                setFilter("Neurologist");
-              }
-              else if(e.value === "others"){
-                setFilter("Others");
-              }
-              else {
-                setFilter(null);
-              }
-            }}
-            className={classes.select}
-            options={filterOptions}
-          />
+          <Grid>
+            <Select
+              onChange={(e) => {
+                if(e.value === "dentist"){
+                  setFilter("Dentist");
+                }
+                else if(e.value === "dermatologist"){
+                  setFilter("Dermatologist");
+                }
+                else if(e.value === "cardiologist"){
+                  setFilter("Cardiologist");
+                }
+                else if(e.value === "pediatrician"){
+                  setFilter("Pediatrician");
+                }
+                else if(e.value === "family physician"){
+                  setFilter("Family Physician");
+                }
+                else if(e.value === "radiologist"){
+                  setFilter("Radiologist");
+                }
+                else if(e.value === "neurologist"){
+                  setFilter("Neurologist");
+                }
+                else if(e.value === "others"){
+                  setFilter("Others");
+                }
+                else {
+                  setFilter(null);
+                }
+              }}
+              //className={classes.select}
+              options={filterOptions}
+            />
+            <Button variant="contained" color="secondary" size='small' onClick={clearFilterHandle}>
+                Clear Filter
+            </Button>
+          </Grid>
         </Grid>
       </Container>
       <Footer />
